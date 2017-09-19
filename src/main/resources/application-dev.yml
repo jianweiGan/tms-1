@@ -1,0 +1,33 @@
+
+# 设置tomcat的最大线程
+server:
+  tomcat:
+    max-threads: 600
+    uri-encoding: UTF-8
+# spring primary datasource 配置
+spring:
+  ds:
+    driver: com.mysql.jdbc.Driver
+    url: jdbc:mysql://bj-cdb-q3vftmtb.sql.tencentcdb.com:63963/tms?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: yueshen521
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat
+    pool:
+      minIdle: 3
+      maxActive: 20
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+logging:
+  config: classpath:log4j.properties
+
+
