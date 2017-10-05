@@ -8,7 +8,7 @@ server:
 spring:
   ds:
     driver: com.mysql.jdbc.Driver
-    url: jdbc:mysql://bj-cdb-q3vftmtb.sql.tencentcdb.com:63963/tms?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/tms?useUnicode=true&characterEncoding=utf8
     username: root
     password: yueshen521
     maxWait: 60000

@@ -1,4 +1,4 @@
-package com.tms.business.user.service;
+package com.tms.business.bus.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tms.business.domain.UserInfo;

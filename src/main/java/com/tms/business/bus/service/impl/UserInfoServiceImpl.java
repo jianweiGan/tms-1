@@ -1,12 +1,11 @@
-package com.tms.business.user.service.impl;
+package com.tms.business.bus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tms.business.domain.UserInfo;
 import com.tms.business.mapper.UserInfoMapper;
-import com.tms.business.user.service.UserInfoService;
+import com.tms.business.bus.service.UserInfoService;
 import com.tms.common.exception.BussinessException;
 import com.tms.common.exception.ErrorCodeEnum;
 import com.tms.common.helper.JOHelper;

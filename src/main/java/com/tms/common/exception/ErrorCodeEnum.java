@@ -10,7 +10,11 @@ public enum ErrorCodeEnum {
     PARAMETERMISSING("20002", "参数值缺失！"),
     ACCOUNTNOTEXIST("20003", "账号不存在"),
     ERRORPASSWORD("20004", "密码错误! "),
-    PASSWORDNOTSAME("20005", "密码不一致! ");
+    PASSWORDNOTSAME("20005", "密码不一致! "),
+    PARAMETERMISSINGByMultiDown("20006", "请选择要下线的条目！"),
+    CANNOTDELETESCENIC("20007", "该景区包含子景点，不能删除！");
+
+
 
     private String resultCode;
     private String resultMsg;

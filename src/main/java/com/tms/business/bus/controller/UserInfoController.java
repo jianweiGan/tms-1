@@ -1,8 +1,7 @@
-package com.tms.business.user.controller;
+package com.tms.business.bus.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.tms.business.domain.UserInfo;
-import com.tms.business.user.service.UserInfoService;
+import com.tms.business.bus.service.UserInfoService;
 import com.tms.mvc.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
