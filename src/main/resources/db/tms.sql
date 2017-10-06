@@ -78,13 +78,13 @@ CREATE TABLE `custom_notice` (
 #用户反馈
 CREATE TABLE `feed_back` (
   `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
-  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '标题',
-  `image_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片',
+  `open_id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT 'openId',
+  `nick_name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '用户昵称',
+  `type` int(11) DEFAULT NULL COMMENT '反馈类型（1 改进意见  2 投诉  3 好评）',
   `content` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
-  `subject` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '简介',
   `phone` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '电话',
   `create_time` TIMESTAMP NULL COMMENT '创建时间',
   `modify_time` TIMESTAMP NULL COMMENT '更新时间',
   `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 删除  0 未删除）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='游客须知表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='用户反馈表';
