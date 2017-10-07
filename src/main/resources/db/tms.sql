@@ -88,3 +88,30 @@ CREATE TABLE `feed_back` (
   `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 删除  0 未删除）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='用户反馈表';
+
+#天门山传奇
+CREATE TABLE `tms_legend` (
+  `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
+  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '标题',
+  `image_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片',
+  `content` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
+  `subject` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '简介',
+  `create_time` TIMESTAMP NULL COMMENT '创建时间',
+  `modify_time` TIMESTAMP NULL COMMENT '更新时间',
+  `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 删除  0 未删除）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='天门山传奇表';
+
+#天门山传奇活动
+CREATE TABLE `tms_legend_activity` (
+  `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
+  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '标题',
+  `start_time` TIMESTAMP NULL COMMENT '开始时间',
+  `end_time` TIMESTAMP NULL COMMENT '结束时间',
+  `content` TEXT COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
+  `create_time` TIMESTAMP NULL COMMENT '创建时间',
+  `modify_time` TIMESTAMP NULL COMMENT '更新时间',
+  `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 删除  0 未删除）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='天门山传奇活动表';
+
