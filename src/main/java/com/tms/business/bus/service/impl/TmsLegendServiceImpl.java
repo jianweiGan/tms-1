@@ -1,5 +1,6 @@
 package com.tms.business.bus.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -22,7 +23,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Transactional
 @Service(value = "service/legend/operate")
@@ -106,6 +109,14 @@ public class TmsLegendServiceImpl implements TmsLegendService {
 
         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(tmsLegendActivity);
 
+        String detailFormStr = tmsLegendActivity.getDetail();
+
+        if (StringUtils.isNotBlank(detailFormStr)) {
+            jsonObject.put("detailForm", JSONArray.parseArray(detailFormStr));
+        } else {
+            jsonObject.put("detailForm", null);
+        }
+
         return jsonObject;
     }
 
@@ -116,6 +127,10 @@ public class TmsLegendServiceImpl implements TmsLegendService {
         tmsLegendActivity.setFlagDelete(0);
         tmsLegendActivity.setCreateTime(new Date());
         tmsLegendActivity.setModifyTime(new Date());
+
+        if (!ObjectUtils.isEmpty(param.getJSONArray("detailForm")) && 0 < param.getJSONArray("detailForm").size()) {
+            tmsLegendActivity.setDetail(param.getJSONArray("detailForm").toJSONString());
+        }
 
         tmsLegendActivityMapper.insert(tmsLegendActivity);
 
@@ -132,6 +147,9 @@ public class TmsLegendServiceImpl implements TmsLegendService {
         }
         TmsLegendActivity tmsLegendActivity = JOHelper.jo2class(param, TmsLegendActivity.class);
         tmsLegendActivity.setModifyTime(new Date());
+        if (!ObjectUtils.isEmpty(param.getJSONArray("detailForm")) && 0 < param.getJSONArray("detailForm").size()) {
+            tmsLegendActivity.setDetail(param.getJSONArray("detailForm").toJSONString());
+        }
 
         tmsLegendActivityMapper.updateByPrimaryKeyWithBLOBs(tmsLegendActivity);
 

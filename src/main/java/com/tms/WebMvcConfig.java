@@ -1,6 +1,7 @@
 package com.tms;
 
 import com.tms.intercepter.CrossDomainInterceptor;
+import com.tms.intercepter.OpearteInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -14,6 +15,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         //  跨域访问
         registry.addInterceptor(new CrossDomainInterceptor()).addPathPatterns("/**");
+
+        //接口拦截器
+//        registry.addInterceptor(new OpearteInterceptor()).addPathPatterns("/**/update*");
 
     }
 
