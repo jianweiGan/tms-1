@@ -6,9 +6,9 @@ server:
 spring:
   ds:
     driver: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/tms?useUnicode=true&amp;characterEncoding=utf-8
-    username: admin
-    password: yueshen521
+    url: jdbc:mysql://192.168.0.43:8606/tms?useUnicode=true&amp;characterEncoding=utf-8
+    username: root
+    password: 0934HUIhui~~
     maxWait: 60000
     timeBetweenEvictionRunsMillis: 60000
     minEvictableIdleTimeMillis: 300000

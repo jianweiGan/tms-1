@@ -107,12 +107,72 @@ CREATE TABLE `tms_legend` (
 CREATE TABLE `tms_legend_activity` (
   `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
   `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '标题',
-  `start_time` TIMESTAMP NULL COMMENT '开始时间',
-  `end_time` TIMESTAMP NULL COMMENT '结束时间',
-  `content` TEXT COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
-  `create_time` TIMESTAMP NULL COMMENT '创建时间',
-  `modify_time` TIMESTAMP NULL COMMENT '更新时间',
+  `image_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片',
+  `start_time` timestamp NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` timestamp NULL DEFAULT NULL COMMENT '结束时间',
+  `detail` text COLLATE utf8mb4_bin,
+  `content` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `modify_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
   `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 删除  0 未删除）',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='天门山传奇活动表';
+
+#实景演出
+CREATE TABLE `live_show` (
+  `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
+  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '标题',
+  `image_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片',
+  `start_time` timestamp NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` timestamp NULL DEFAULT NULL COMMENT '结束时间',
+  `detail` text COLLATE utf8mb4_bin,
+  `content` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `modify_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 删除  0 未删除）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='实景演出表';
+
+#语音维护
+CREATE TABLE `voice_manage` (
+  `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
+  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '名称',
+  `lat` DOUBLE NULL COMMENT '纬度',
+  `lng` DOUBLE NULL COMMENT '经度',
+  `type` int(11) DEFAULT NULL COMMENT '触发类型（1 经纬度）',
+  `content` text COLLATE utf8mb4_bin NULL  COMMENT '语音内容',
+  `url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '语音链接',
+  `push_content` varchar(2000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '推送话术',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `modify_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 删除  0 未删除）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='语音维护表';
+
+#精彩风景
+CREATE TABLE `wonderful_photo` (
+  `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
+  `image_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片',
+  `type` int(11) DEFAULT NULL COMMENT '类型（1 用户上传  2 机构上传）',
+  `content` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
+  `approve` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '审核内容',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `modify_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 未通过  0 通过）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='精彩风景表';
+
+#手绘地图
+CREATE TABLE `map_manage` (
+  `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
+  `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '名称',
+  `image_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片',
+  `sort` int(11) DEFAULT NULL COMMENT '序号',
+  `is_default` int(11) DEFAULT NULL COMMENT '是否默认 (1 非默认  0 是默认)',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `modify_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  `flag_delete` int(11) DEFAULT NULL COMMENT '是否删除（1 未通过  0 通过）',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='手绘地图表';
+
 
