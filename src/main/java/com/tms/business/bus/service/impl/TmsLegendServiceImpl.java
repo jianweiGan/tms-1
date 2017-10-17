@@ -86,7 +86,7 @@ public class TmsLegendServiceImpl implements TmsLegendService {
 
         PageHelper.startPage(pageJson.getIntValue("pageNo"), pageJson.getIntValue("pageSize")); // 核心分页代码
 
-        Page<TmsLegendActivity> page = tmsLegendActivityMapper.selectList(param.getString("name"), param.getDate("startTime"), param.getDate("endTime"));
+        Page<TmsLegendActivity> page = tmsLegendActivityMapper.selectList(param.getString("name"), param.getInteger("type"), param.getDate("startTime"), param.getDate("endTime"));
 
         JSONObject result = new JSONObject();
         result.put("list", page.getResult());

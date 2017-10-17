@@ -66,7 +66,7 @@ public interface TmsLegendActivityMapper {
      */
     int updateByPrimaryKey(TmsLegendActivity record);
 
-    Page<TmsLegendActivity> selectList(@Param("name") String name, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    Page<TmsLegendActivity> selectList(@Param("name") String name, @Param("type") Integer type, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
 
 }
