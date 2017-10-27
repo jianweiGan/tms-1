@@ -37,7 +37,7 @@ CREATE TABLE `scenic_spot` (
   `name` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '景区名称',
   `icon` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图标',
   `image_url` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片',
-  `level` int(11) NOT NULL COMMENT '景区级别（1 景区  2 景点）',
+  `level` int(11) NOT NULL COMMENT '景区级别（0 景区 1 景观区 2 景点）',
   `parent_id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '父景区id',
   `sort` int(11) DEFAULT NULL COMMENT '排序',
   `content` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '内容',
@@ -175,4 +175,13 @@ CREATE TABLE `map_manage` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='手绘地图表';
 
-
+#log
+CREATE TABLE `tb_log` (
+  `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
+  `user_id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT 'userId',
+  `table` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '表名',
+  `data_id` int(11) DEFAULT NULL COMMENT '操作数据id',
+  `flag` int(11) DEFAULT NULL COMMENT '操作类型（1 新增  2 修改  3删除）',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='log表';

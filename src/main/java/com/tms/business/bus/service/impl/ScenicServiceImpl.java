@@ -280,7 +280,7 @@ public class ScenicServiceImpl implements ScenicService {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
         }
 
-        List<ScenicSpotResource> list = scenicSpotResourceMapper.selectListByDataId(id);
+        List<ScenicSpot> list = scenicSpotMapper.selectByParentId(id, 0);
         if (!ObjectUtils.isEmpty(list) && 0 < list.size()) {
             throw new BussinessException(ErrorCodeEnum.CANNOTDELETESCENIC);
         }

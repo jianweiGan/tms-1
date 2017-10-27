@@ -5,6 +5,8 @@ import com.tms.business.domain.ScenicSpot;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ScenicSpotMapper {
     /**
@@ -58,5 +60,8 @@ public interface ScenicSpotMapper {
     Page<ScenicSpot> selectList(ScenicSpot scenicSpot);
 
     ScenicSpot selectByIdAndFlagDelete(@Param("id") String id, @Param("flagDelete") Integer flagDelete);
+
+    List<ScenicSpot> selectByParentId(@Param("parentId") String parentId, @Param("flagDelete") Integer flagDelete);
+
 
 }

@@ -12,9 +12,8 @@ public enum ErrorCodeEnum {
     ERRORPASSWORD("20004", "密码错误! "),
     PASSWORDNOTSAME("20005", "密码不一致! "),
     PARAMETERMISSINGByMultiDown("20006", "请选择要下线的条目！"),
-    CANNOTDELETESCENIC("20007", "该景区包含子景点，不能删除！");
-
-
+    CANNOTDELETESCENIC("20007", "该景观区包含子景点，不能删除！"),
+    ENDTIMEBEFORESTARTTIME("20008", "结束时间不能早于开始时间！");
 
     private String resultCode;
     private String resultMsg;

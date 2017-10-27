@@ -123,6 +123,16 @@ public class TmsLegendServiceImpl implements TmsLegendService {
     @Override
     public JSONObject addLegendActivityInfo(JSONObject param) throws Exception {
         TmsLegendActivity tmsLegendActivity = JOHelper.jo2class(param, TmsLegendActivity.class);
+
+        Date startTime = tmsLegendActivity.getStartTime();
+        Date endTime = tmsLegendActivity.getEndTime();
+
+        if (!ObjectUtils.isEmpty(startTime) && !ObjectUtils.isEmpty(endTime)) {
+            if (endTime.before(startTime)) {
+                throw new BussinessException(ErrorCodeEnum.ENDTIMEBEFORESTARTTIME);
+            }
+        }
+
         tmsLegendActivity.setId(UUIDHelper.getUUID());
         tmsLegendActivity.setFlagDelete(0);
         tmsLegendActivity.setCreateTime(new Date());
@@ -149,6 +159,14 @@ public class TmsLegendServiceImpl implements TmsLegendService {
         tmsLegendActivity.setModifyTime(new Date());
         if (!ObjectUtils.isEmpty(param.getJSONArray("detailForm")) && 0 < param.getJSONArray("detailForm").size()) {
             tmsLegendActivity.setDetail(param.getJSONArray("detailForm").toJSONString());
+        }
+        Date startTime = tmsLegendActivity.getStartTime();
+        Date endTime = tmsLegendActivity.getEndTime();
+
+        if (!ObjectUtils.isEmpty(startTime) && !ObjectUtils.isEmpty(endTime)) {
+            if (endTime.before(startTime)) {
+                throw new BussinessException(ErrorCodeEnum.ENDTIMEBEFORESTARTTIME);
+            }
         }
 
         tmsLegendActivityMapper.updateByPrimaryKeyWithBLOBs(tmsLegendActivity);

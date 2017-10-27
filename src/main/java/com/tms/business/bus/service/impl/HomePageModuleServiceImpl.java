@@ -52,7 +52,11 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
 
         JSONObject pageJson = param.getJSONObject("page");
 
-        PageHelper.startPage(pageJson.getIntValue("pageNo"), pageJson.getIntValue("pageSize")); // 核心分页代码
+        if (ObjectUtils.isEmpty(pageJson)) {
+            PageHelper.startPage(1, 10); // 核心分页代码
+        } else {
+            PageHelper.startPage(pageJson.getIntValue("pageNo"), pageJson.getIntValue("pageSize")); // 核心分页代码
+        }
 
         HomePageModule homePageModule = new HomePageModule();
 
