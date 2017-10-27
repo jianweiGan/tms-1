@@ -25,5 +25,7 @@ public interface SmallProgramService {
 
     JSONObject getMinJianChuanShuoDetail(JSONObject param) throws Exception;
 
+    JSONObject getScenisInfo(JSONObject param) throws Exception;
+
 
 }

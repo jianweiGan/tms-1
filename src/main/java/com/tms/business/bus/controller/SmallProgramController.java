@@ -48,4 +48,22 @@ public class SmallProgramController extends BaseController{
         return smallProgramService.getMinJianChuanShuoDetail(param);
     }
 
+    @RequestMapping(value = "/program/get_scenis_info")
+    @ResponseBody
+    public JSONObject getScenisInfo(@RequestBody JSONObject param) throws Exception{
+        return smallProgramService.getScenisInfo(param);
+    }
+
+    @RequestMapping(value = "/program/add_feed_back")
+    @ResponseBody
+    public JSONObject addFeedBack(@RequestBody JSONObject param) throws Exception{
+        return smallProgramService.addFeedBack(param);
+    }
+
+    @RequestMapping(value = "/program/about_tms")
+    @ResponseBody
+    public JSONObject aboutTms(@RequestBody JSONObject param) throws Exception{
+        return smallProgramService.aboutTms(param);
+    }
+
 }

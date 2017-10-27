@@ -5,15 +5,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tms.business.bus.service.SmallProgramService;
-import com.tms.business.domain.HomePageModule;
-import com.tms.business.domain.TmsLegend;
-import com.tms.business.domain.TmsLegendActivity;
-import com.tms.business.mapper.HomePageModuleMapper;
-import com.tms.business.mapper.TmsLegendActivityMapper;
-import com.tms.business.mapper.TmsLegendMapper;
+import com.tms.business.domain.*;
+import com.tms.business.mapper.*;
 import com.tms.common.exception.BussinessException;
 import com.tms.common.exception.ErrorCodeEnum;
 import com.tms.common.helper.JOHelper;
+import com.tms.common.helper.UUIDHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Transactional
@@ -33,6 +31,14 @@ public class SmallProgramServiceImpl implements SmallProgramService {
     private TmsLegendMapper tmsLegendMapper;
     @Autowired
     private TmsLegendActivityMapper tmsLegendActivityMapper;
+    @Autowired
+    private ScenicSpotMapper scenicSpotMapper;
+    @Autowired
+    private ScenicSpotResourceMapper scenicSpotResourceMapper;
+    @Autowired
+    private CustomNoticeMapper customNoticeMapper;
+    @Autowired
+    private FeedBackMapper feedBackMapper;
 
     @Override
     public JSONObject selectHomePageList(JSONObject param) throws Exception {
@@ -57,7 +63,43 @@ public class SmallProgramServiceImpl implements SmallProgramService {
 
     @Override
     public JSONObject aboutTms(JSONObject param) throws Exception {
-        return null;
+
+        //tms介绍
+
+        PageHelper.startPage(1, 1); // 核心分页代码
+
+        JSONObject result = new JSONObject();
+
+        ScenicSpot scenicSpot = new ScenicSpot();
+        scenicSpot.setFlagDelete(0);
+        Page<ScenicSpot> page = scenicSpotMapper.selectList(scenicSpot);
+        if (!ObjectUtils.isEmpty(page) && 0 < page.getTotal()) {
+            JSONObject tmsJson = JOHelper.obj2Json(page.getResult().get(0));
+
+
+            List<ScenicSpotResource> list = scenicSpotResourceMapper.selectListByDataId(tmsJson.getString("id"));
+
+            List<JSONObject> imageUrls = new ArrayList<>();
+
+            list.forEach(resource -> {
+                if (1 == resource.getType()) {
+                    imageUrls.add(JOHelper.gen("id", resource.getId(), "url", resource.getSourceurl()));
+                }
+            });
+            tmsJson.put("imageUrls", imageUrls);
+            result.put("tms", tmsJson);
+        } else {
+            result.put("tms", null);
+        }
+
+        //主要景点图片 TODO:未确定
+        result.put("mainImage", "http://oq50tshbr.bkt.clouddn.com/tms/image/55dca620b381fcb83dcd5481469c6603.jpeg");
+
+        //游客须知
+        CustomNotice customNotice = customNoticeMapper.getCustomNotice();
+        result.put("notice", customNotice);
+
+        return result;
     }
 
     @Override
@@ -67,7 +109,26 @@ public class SmallProgramServiceImpl implements SmallProgramService {
 
     @Override
     public JSONObject addFeedBack(JSONObject param) throws Exception {
-        return null;
+
+        FeedBack feedBack = JOHelper.jo2class(param, FeedBack.class);
+        if (ObjectUtils.isEmpty(feedBack)) {
+            throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
+        }
+        if (StringUtils.isBlank(feedBack.getOpenId()) || StringUtils.isBlank(feedBack.getNickName())) {
+            throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
+        }
+
+        feedBack.setId(UUIDHelper.getUUID());
+        feedBack.setCreateTime(new Date());
+        feedBack.setModifyTime(new Date());
+        feedBack.setFlagDelete(0);
+
+        feedBackMapper.insert(feedBack);
+
+        JSONObject result = new JSONObject();
+        result.put("data", "提交成功");
+        result.put("status", 1);
+        return result;
     }
 
     @Override
@@ -152,5 +213,44 @@ public class SmallProgramServiceImpl implements SmallProgramService {
         }
 
         return result;
+    }
+
+    @Override
+    public JSONObject getScenisInfo(JSONObject param) throws Exception {
+
+        String id = param.getString("id");
+        if (StringUtils.isBlank(id)) {
+            throw  new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
+        }
+
+        ScenicSpot scenicSpot = scenicSpotMapper.selectByPrimaryKey(id);
+
+        if (ObjectUtils.isEmpty(scenicSpot)) {
+            throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
+        }
+
+        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(scenicSpot);
+
+        List<ScenicSpotResource> list = scenicSpotResourceMapper.selectListByDataId(id);
+
+        List<JSONObject> imageUrls = new ArrayList<>();
+        List<JSONObject> videoUrls = new ArrayList<>();
+        List<JSONObject> audioUrls = new ArrayList<>();
+
+        list.forEach(resource -> {
+            if (1 == resource.getType()) {
+                imageUrls.add(JOHelper.gen("id", resource.getId(), "url", resource.getSourceurl()));
+            } else if (2 == resource.getType()) {
+                videoUrls.add(JOHelper.gen("id", resource.getId(), "url", resource.getSourceurl()));
+            } else if (3 == resource.getType()) {
+                audioUrls.add(JOHelper.gen("id", resource.getId(), "url", resource.getSourceurl()));
+            }
+        });
+
+        jsonObject.put("imageUrls", imageUrls);
+        jsonObject.put("videoUrls", videoUrls);
+        jsonObject.put("audioUrls", audioUrls);
+
+        return jsonObject;
     }
 }
