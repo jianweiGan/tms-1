@@ -3,6 +3,7 @@ package com.tms.business.bus.service.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.tms.business.bus.service.TbLogService;
 import com.tms.business.domain.UserInfo;
 import com.tms.business.mapper.UserInfoMapper;
 import com.tms.business.bus.service.UserInfoService;
@@ -25,6 +26,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+    @Autowired
+    private TbLogService tbLogService;
 
     @Override
     public JSONObject login(JSONObject param) throws Exception {
@@ -85,13 +88,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public JSONObject addUserInfo(JSONObject jsonObject) throws Exception {
+    public JSONObject addUserInfo(JSONObject jsonObject, String token) throws Exception {
 
         UserInfo userInfo = JOHelper.jo2class(jsonObject, UserInfo.class);
         userInfo.setId(UUIDHelper.getUUID());
         userInfo.setFlagDelete(0);
         userInfo.setRoleName("admin");
         userInfoMapper.insert(userInfo);
+
+        tbLogService.addTbLog(token, "user_info", userInfo.getId(), 1);
 
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
@@ -100,7 +105,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public JSONObject updateUserInfo(JSONObject param) throws Exception {
+    public JSONObject updateUserInfo(JSONObject param, String token) throws Exception {
 
         if (StringUtils.isBlank(param.getString("id")) ||
                 StringUtils.isBlank(param.getString("userName")) ||
@@ -118,6 +123,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         userInfoMapper.updateByPrimaryKey(userInfo);
 
+        tbLogService.addTbLog(token, "user_info", userInfo.getId(), 2);
+
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");
         result.put("status", 1);
@@ -125,7 +132,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public JSONObject deleteUserInfo(JSONObject param) throws Exception {
+    public JSONObject deleteUserInfo(JSONObject param, String token) throws Exception {
 
         String id = param.getString("id");
         Integer flagDelete = param.getInteger("flagDelete");
@@ -138,6 +145,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfo.setFlagDelete(flagDelete);
         userInfoMapper.updateByPrimaryKeySelective(userInfo);
 
+        tbLogService.addTbLog(token, "user_info", userInfo.getId(), 3);
+
         JSONObject result = new JSONObject();
         result.put("data", "删除成功");
         result.put("status", 1);
@@ -145,7 +154,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public JSONObject resetPassword(JSONObject param) throws Exception {
+    public JSONObject resetPassword(JSONObject param, String token) throws Exception {
         if (StringUtils.isBlank(param.getString("id")) ||
                 StringUtils.isBlank(param.getString("oldPassword")) ||
                 StringUtils.isBlank(param.getString("password")) ||
@@ -169,6 +178,8 @@ public class UserInfoServiceImpl implements UserInfoService {
         userInfo.setPassword(param.getString("password"));
 
         userInfoMapper.updateByPrimaryKeySelective(userInfo);
+
+        tbLogService.addTbLog(token, "user_info", userInfo.getId(), 2);
 
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");

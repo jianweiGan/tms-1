@@ -34,26 +34,26 @@ public class UserInfoController extends BaseController{
 
     @RequestMapping(value = "/user/add_user")
     @ResponseBody
-    public JSONObject addUserInfo(@RequestBody JSONObject param) throws Exception{
-        return userInfoService.addUserInfo(param);
+    public JSONObject addUserInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return userInfoService.addUserInfo(param, token);
     }
 
     @RequestMapping(value = "/user/update_user")
     @ResponseBody
-    public JSONObject updateUserInfo(@RequestBody JSONObject param) throws Exception{
-        return userInfoService.updateUserInfo(param);
+    public JSONObject updateUserInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return userInfoService.updateUserInfo(param, token);
     }
 
     @RequestMapping(value = "/user/delete_user")
     @ResponseBody
-    public JSONObject deleteUserInfo(@RequestBody JSONObject param) throws Exception{
-        return userInfoService.deleteUserInfo(param);
+    public JSONObject deleteUserInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return userInfoService.deleteUserInfo(param, token);
     }
 
     @RequestMapping(value = "/user/reset_password")
     @ResponseBody
-    public JSONObject resetPassword(@RequestBody JSONObject param) throws Exception{
-        return userInfoService.resetPassword(param);
+    public JSONObject resetPassword(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return userInfoService.resetPassword(param, token);
     }
 
 }

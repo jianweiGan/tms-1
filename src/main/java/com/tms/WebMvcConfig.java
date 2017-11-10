@@ -17,7 +17,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new CrossDomainInterceptor()).addPathPatterns("/**");
 
         //接口拦截器
-//        registry.addInterceptor(new OpearteInterceptor()).addPathPatterns("/**/update*");
+        registry.addInterceptor(new OpearteInterceptor()).addPathPatterns("/**/update*");
 
     }
 

@@ -6,10 +6,7 @@ import com.tms.mvc.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class HomePageModuleController extends BaseController{
@@ -31,26 +28,26 @@ public class HomePageModuleController extends BaseController{
 
     @RequestMapping(value = "/home_page/add_info")
     @ResponseBody
-    public JSONObject addHomePageModule(@RequestBody JSONObject param) throws Exception{
-        return homePageModuleService.addHomePageModule(param);
+    public JSONObject addHomePageModule(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return homePageModuleService.addHomePageModule(param, token);
     }
 
     @RequestMapping(value = "/home_page/update_info")
     @ResponseBody
-    public JSONObject updateHomePageModule(@RequestBody JSONObject param) throws Exception{
-        return homePageModuleService.updateHomePageModule(param);
+    public JSONObject updateHomePageModule(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return homePageModuleService.updateHomePageModule(param, token);
     }
 
     @RequestMapping(value = "/home_page/delete_info")
     @ResponseBody
-    public JSONObject deleteHomePageModule(@RequestBody JSONObject param) throws Exception{
-        return homePageModuleService.deleteHomePageModule(param);
+    public JSONObject deleteHomePageModule(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return homePageModuleService.deleteHomePageModule(param, token);
     }
 
     @RequestMapping(value = "/home_page/multi_down")
     @ResponseBody
-    public JSONObject multiDownHome(@RequestBody JSONObject param) throws Exception{
-        return homePageModuleService.multiDownHome(param);
+    public JSONObject multiDownHome(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return homePageModuleService.multiDownHome(param, token);
     }
 
 }

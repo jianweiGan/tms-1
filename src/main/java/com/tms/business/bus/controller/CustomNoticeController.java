@@ -7,10 +7,7 @@ import com.tms.mvc.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class CustomNoticeController extends BaseController{
@@ -27,13 +24,13 @@ public class CustomNoticeController extends BaseController{
 
     @RequestMapping(value = "/notice/add_notice")
     @ResponseBody
-    public JSONObject addNoticeInfo(@RequestBody JSONObject param) throws Exception{
-        return customNoticeService.addNoticeInfo(param);
+    public JSONObject addNoticeInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return customNoticeService.addNoticeInfo(param, token);
     }
 
     @RequestMapping(value = "/notice/update_notice")
     @ResponseBody
-    public JSONObject updateNoticeInfo(@RequestBody JSONObject param) throws Exception{
-        return customNoticeService.updateNoticeInfo(param);
+    public JSONObject updateNoticeInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return customNoticeService.updateNoticeInfo(param, token);
     }
 }

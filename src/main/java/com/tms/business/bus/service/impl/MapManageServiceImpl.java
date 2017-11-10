@@ -6,6 +6,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tms.business.bus.service.HomePageModuleService;
 import com.tms.business.bus.service.MapManageService;
+import com.tms.business.bus.service.TbLogService;
 import com.tms.business.domain.HomePageModule;
 import com.tms.business.domain.MapManage;
 import com.tms.business.mapper.HomePageModuleMapper;
@@ -32,6 +33,9 @@ public class MapManageServiceImpl implements MapManageService {
 
     @Autowired
     private MapManageMapper mapManageMapper;
+
+    @Autowired
+    private TbLogService tbLogService;
 
     @Override
     public JSONObject getMapeInfo(String id) throws Exception {
@@ -70,7 +74,7 @@ public class MapManageServiceImpl implements MapManageService {
     }
 
     @Override
-    public JSONObject addMap(JSONObject param) throws Exception {
+    public JSONObject addMap(JSONObject param, String token) throws Exception {
 
         MapManage mapManage = JOHelper.jo2class(param, MapManage.class);
         mapManage.setId(UUIDHelper.getUUID());
@@ -79,6 +83,8 @@ public class MapManageServiceImpl implements MapManageService {
         mapManage.setFlagDelete(0);
         mapManageMapper.insert(mapManage);
 
+        tbLogService.addTbLog(token, "map_manage", mapManage.getId(), 1);
+
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
         result.put("status", 1);
@@ -86,7 +92,7 @@ public class MapManageServiceImpl implements MapManageService {
     }
 
     @Override
-    public JSONObject updateMap(JSONObject param) throws Exception {
+    public JSONObject updateMap(JSONObject param, String token) throws Exception {
 
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
@@ -96,6 +102,8 @@ public class MapManageServiceImpl implements MapManageService {
 
         mapManageMapper.updateByPrimaryKey(mapManage);
 
+        tbLogService.addTbLog(token, "map_manage", mapManage.getId(), 2);
+
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");
         result.put("status", 1);
@@ -103,7 +111,7 @@ public class MapManageServiceImpl implements MapManageService {
     }
 
     @Override
-    public JSONObject deleteMap(JSONObject param) throws Exception {
+    public JSONObject deleteMap(JSONObject param, String token) throws Exception {
         String id = param.getString("id");
         if (StringUtils.isBlank(id)) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
@@ -115,6 +123,8 @@ public class MapManageServiceImpl implements MapManageService {
 
         mapManageMapper.updateByPrimaryKeySelective(mapManage);
 
+        tbLogService.addTbLog(token, "map_manage", mapManage.getId(), 3);
+
         JSONObject result = new JSONObject();
         result.put("data", "删除成功");
         result.put("status", 1);
@@ -122,7 +132,7 @@ public class MapManageServiceImpl implements MapManageService {
     }
 
     @Override
-    public JSONObject isDefault(JSONObject param) throws Exception {
+    public JSONObject isDefault(JSONObject param, String token) throws Exception {
         String id = param.getString("id");
         if (StringUtils.isBlank(id)) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
@@ -135,6 +145,8 @@ public class MapManageServiceImpl implements MapManageService {
         mapManage.setIsDefault(0);
 
         mapManageMapper.updateByPrimaryKeySelective(mapManage);
+
+        tbLogService.addTbLog(token, "map_manage", mapManage.getId(), 2);
 
         JSONObject result = new JSONObject();
         result.put("data", "设置成功");

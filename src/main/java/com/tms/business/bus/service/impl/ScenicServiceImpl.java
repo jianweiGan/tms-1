@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tms.business.bus.service.ScenicService;
+import com.tms.business.bus.service.TbLogService;
 import com.tms.business.domain.HomePageModule;
 import com.tms.business.domain.ScenicSpot;
 import com.tms.business.domain.ScenicSpotResource;
@@ -36,6 +37,8 @@ public class ScenicServiceImpl implements ScenicService {
     private ScenicSpotMapper scenicSpotMapper;
     @Autowired
     private ScenicSpotResourceMapper scenicSpotResourceMapper;
+    @Autowired
+    private TbLogService tbLogService;
 
     @Override
     public JSONObject getScenicInfo(String id) throws Exception {
@@ -114,12 +117,11 @@ public class ScenicServiceImpl implements ScenicService {
     }
 
     @Override
-    public JSONObject addScenicInfo(JSONObject param) throws Exception {
+    public JSONObject addScenicInfo(JSONObject param, String token) throws Exception {
         //保存基本信息
         ScenicSpot scenicSpot = JOHelper.jo2class(param, ScenicSpot.class);
         scenicSpot.setId(UUIDHelper.getUUID());
         scenicSpot.setFlagDelete(0);
-        scenicSpot.setSort(0);
         scenicSpot.setCreateTime(new Date());
         scenicSpot.setModifyTime(new Date());
 
@@ -172,6 +174,8 @@ public class ScenicServiceImpl implements ScenicService {
             scenicSpotResourceMapper.insert(scenicSpotResource);
         });
 
+        tbLogService.addTbLog(token, "scenic_spot", scenicSpot.getId(), 1);
+
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
         result.put("status", 1);
@@ -179,7 +183,7 @@ public class ScenicServiceImpl implements ScenicService {
     }
 
     @Override
-    public JSONObject updateScenicInfo(JSONObject param) throws Exception {
+    public JSONObject updateScenicInfo(JSONObject param, String token) throws Exception {
 
         String id = param.getString("id");
         if (StringUtils.isBlank(id)) {
@@ -266,6 +270,8 @@ public class ScenicServiceImpl implements ScenicService {
             }
         });
 
+        tbLogService.addTbLog(token, "scenic_spot", scenicSpot.getId(), 2);
+
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");
         result.put("status", 1);
@@ -273,7 +279,7 @@ public class ScenicServiceImpl implements ScenicService {
     }
 
     @Override
-    public JSONObject deleteScenicInfo(JSONObject param) throws Exception {
+    public JSONObject deleteScenicInfo(JSONObject param, String token) throws Exception {
         String id = param.getString("id");
         Integer flagDelete = param.getInteger("flagDelete");
         if (StringUtils.isBlank(id) || ObjectUtils.isEmpty(flagDelete)) {
@@ -289,6 +295,8 @@ public class ScenicServiceImpl implements ScenicService {
         scenicSpot.setId(id);
         scenicSpot.setFlagDelete(flagDelete);
         scenicSpotMapper.updateByPrimaryKeySelective(scenicSpot);
+
+        tbLogService.addTbLog(token, "scenic_spot", scenicSpot.getId(), 3);
 
         JSONObject result = new JSONObject();
         result.put("data", "删除成功");

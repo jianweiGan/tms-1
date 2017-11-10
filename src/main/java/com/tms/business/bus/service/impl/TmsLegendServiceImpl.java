@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tms.business.bus.service.CustomNoticeService;
+import com.tms.business.bus.service.TbLogService;
 import com.tms.business.bus.service.TmsLegendService;
 import com.tms.business.domain.CustomNotice;
 import com.tms.business.domain.FeedBack;
@@ -37,6 +38,9 @@ public class TmsLegendServiceImpl implements TmsLegendService {
     @Autowired
     private TmsLegendActivityMapper tmsLegendActivityMapper;
 
+    @Autowired
+    private TbLogService tbLogService;
+
     @Override
     public JSONObject getLegendInfo() throws Exception {
 
@@ -48,7 +52,7 @@ public class TmsLegendServiceImpl implements TmsLegendService {
     }
 
     @Override
-    public JSONObject addLegendInfo(JSONObject param) throws Exception {
+    public JSONObject addLegendInfo(JSONObject param, String token) throws Exception {
 
         TmsLegend tmsLegend = JOHelper.jo2class(param, TmsLegend.class);
         tmsLegend.setId(UUIDHelper.getUUID());
@@ -58,6 +62,8 @@ public class TmsLegendServiceImpl implements TmsLegendService {
 
         tmsLegendMapper.insert(tmsLegend);
 
+        tbLogService.addTbLog(token, "tms_legend", tmsLegend.getId(), 1);
+
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
         result.put("status", 1);
@@ -65,7 +71,7 @@ public class TmsLegendServiceImpl implements TmsLegendService {
     }
 
     @Override
-    public JSONObject updateLegendInfo(JSONObject param) throws Exception {
+    public JSONObject updateLegendInfo(JSONObject param, String token) throws Exception {
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
         }
@@ -73,6 +79,8 @@ public class TmsLegendServiceImpl implements TmsLegendService {
         tmsLegend.setModifyTime(new Date());
 
         tmsLegendMapper.updateByPrimaryKey(tmsLegend);
+
+        tbLogService.addTbLog(token, "tms_legend", tmsLegend.getId(), 2);
 
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");
@@ -121,7 +129,7 @@ public class TmsLegendServiceImpl implements TmsLegendService {
     }
 
     @Override
-    public JSONObject addLegendActivityInfo(JSONObject param) throws Exception {
+    public JSONObject addLegendActivityInfo(JSONObject param, String token) throws Exception {
         TmsLegendActivity tmsLegendActivity = JOHelper.jo2class(param, TmsLegendActivity.class);
 
         Date startTime = tmsLegendActivity.getStartTime();
@@ -144,6 +152,8 @@ public class TmsLegendServiceImpl implements TmsLegendService {
 
         tmsLegendActivityMapper.insert(tmsLegendActivity);
 
+        tbLogService.addTbLog(token, "tms_legend_activity", tmsLegendActivity.getId(), 1);
+
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
         result.put("status", 1);
@@ -151,7 +161,7 @@ public class TmsLegendServiceImpl implements TmsLegendService {
     }
 
     @Override
-    public JSONObject updateLegendActivityInfo(JSONObject param) throws Exception {
+    public JSONObject updateLegendActivityInfo(JSONObject param, String token) throws Exception {
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
         }
@@ -171,6 +181,8 @@ public class TmsLegendServiceImpl implements TmsLegendService {
 
         tmsLegendActivityMapper.updateByPrimaryKeyWithBLOBs(tmsLegendActivity);
 
+        tbLogService.addTbLog(token, "tms_legend_activity", tmsLegendActivity.getId(), 2);
+
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");
         result.put("status", 1);
@@ -178,7 +190,7 @@ public class TmsLegendServiceImpl implements TmsLegendService {
     }
 
     @Override
-    public JSONObject deleteLegendActivityInfo(JSONObject param) throws Exception {
+    public JSONObject deleteLegendActivityInfo(JSONObject param, String token) throws Exception {
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
         }
@@ -187,6 +199,8 @@ public class TmsLegendServiceImpl implements TmsLegendService {
         tmsLegendActivity.setFlagDelete(1);
 
         tmsLegendActivityMapper.updateByPrimaryKeySelective(tmsLegendActivity);
+
+        tbLogService.addTbLog(token, "tms_legend_activity", tmsLegendActivity.getId(), 3);
 
         JSONObject result = new JSONObject();
         result.put("data", "删除成功");

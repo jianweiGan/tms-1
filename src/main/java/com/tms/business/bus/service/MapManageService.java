@@ -11,12 +11,12 @@ public interface MapManageService {
 
     JSONObject selectMapList(JSONObject param) throws Exception;
 
-    JSONObject addMap(JSONObject param) throws Exception;
+    JSONObject addMap(JSONObject param, String token) throws Exception;
 
-    JSONObject updateMap(JSONObject param) throws Exception;
+    JSONObject updateMap(JSONObject param, String token) throws Exception;
 
-    JSONObject deleteMap(JSONObject param) throws Exception;
+    JSONObject deleteMap(JSONObject param, String token) throws Exception;
 
-    JSONObject isDefault(JSONObject param) throws Exception;
+    JSONObject isDefault(JSONObject param, String token) throws Exception;
 
 }

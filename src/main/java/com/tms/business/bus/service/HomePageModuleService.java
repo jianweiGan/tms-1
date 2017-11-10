@@ -11,12 +11,12 @@ public interface HomePageModuleService {
 
     JSONObject selectList(JSONObject param) throws Exception;
 
-    JSONObject addHomePageModule(JSONObject param) throws Exception;
+    JSONObject addHomePageModule(JSONObject param, String token) throws Exception;
 
-    JSONObject updateHomePageModule(JSONObject param) throws Exception;
+    JSONObject updateHomePageModule(JSONObject param, String token) throws Exception;
 
-    JSONObject deleteHomePageModule(JSONObject param) throws Exception;
+    JSONObject deleteHomePageModule(JSONObject param, String token) throws Exception;
 
-    JSONObject multiDownHome(JSONObject param) throws Exception;
+    JSONObject multiDownHome(JSONObject param, String token) throws Exception;
 
 }

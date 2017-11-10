@@ -14,12 +14,12 @@ public interface UserInfoService {
 
     JSONObject selectList(JSONObject param) throws Exception;
 
-    JSONObject addUserInfo(JSONObject param) throws Exception;
+    JSONObject addUserInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject updateUserInfo(JSONObject param) throws Exception;
+    JSONObject updateUserInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject deleteUserInfo(JSONObject param) throws Exception;
+    JSONObject deleteUserInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject resetPassword(JSONObject param) throws Exception;
+    JSONObject resetPassword(JSONObject param, String token) throws Exception;
 
 }

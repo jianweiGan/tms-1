@@ -35,26 +35,26 @@ public class MapManageController extends BaseController{
 
     @RequestMapping(value = "/map/add_map")
     @ResponseBody
-    public JSONObject addMap(@RequestBody JSONObject param) throws Exception{
-        return mapManageService.addMap(param);
+    public JSONObject addMap(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return mapManageService.addMap(param, token);
     }
 
     @RequestMapping(value = "/map/update_map")
     @ResponseBody
-    public JSONObject updateMap(@RequestBody JSONObject param) throws Exception{
-        return mapManageService.updateMap(param);
+    public JSONObject updateMap(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return mapManageService.updateMap(param, token);
     }
 
     @RequestMapping(value = "/map/delete_map")
     @ResponseBody
-    public JSONObject deleteMap(@RequestBody JSONObject param) throws Exception{
-        return mapManageService.deleteMap(param);
+    public JSONObject deleteMap(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return mapManageService.deleteMap(param, token);
     }
 
     @RequestMapping(value = "/map/is_default")
     @ResponseBody
-    public JSONObject isDefault(@RequestBody JSONObject param) throws Exception{
-        return mapManageService.isDefault(param);
+    public JSONObject isDefault(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return mapManageService.isDefault(param, token);
     }
 
 }

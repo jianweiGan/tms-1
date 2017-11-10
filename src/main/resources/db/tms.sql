@@ -179,8 +179,8 @@ CREATE TABLE `map_manage` (
 CREATE TABLE `tb_log` (
   `id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT '编号',
   `user_id` varchar(64) COLLATE utf8mb4_bin NOT NULL COMMENT 'userId',
-  `table` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '表名',
-  `data_id` int(11) DEFAULT NULL COMMENT '操作数据id',
+  `table_name` varchar(255) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '表名',
+  `data_id` varchar(64) DEFAULT NULL COMMENT '操作数据id',
   `flag` int(11) DEFAULT NULL COMMENT '操作类型（1 新增  2 修改  3删除）',
   `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)

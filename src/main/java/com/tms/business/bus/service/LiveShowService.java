@@ -12,10 +12,10 @@ public interface LiveShowService {
 
     JSONObject getLiveShowInfo(@RequestParam("id") String id) throws Exception;
 
-    JSONObject addLiveShowInfo(JSONObject param) throws Exception;
+    JSONObject addLiveShowInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject updateLiveShowInfo(JSONObject param) throws Exception;
+    JSONObject updateLiveShowInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject deleteLiveShowInfo(JSONObject param) throws Exception;
+    JSONObject deleteLiveShowInfo(JSONObject param, String token) throws Exception;
 
 }

@@ -9,8 +9,8 @@ public interface CustomNoticeService {
 
     JSONObject getNoticeInfo() throws Exception;
 
-    JSONObject addNoticeInfo(JSONObject param) throws Exception;
+    JSONObject addNoticeInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject updateNoticeInfo(JSONObject param) throws Exception;
+    JSONObject updateNoticeInfo(JSONObject param, String token) throws Exception;
 
 }

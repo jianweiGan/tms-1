@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tms.business.bus.service.HomePageModuleService;
+import com.tms.business.bus.service.TbLogService;
 import com.tms.business.domain.HomePageModule;
 import com.tms.business.mapper.HomePageModuleMapper;
 import com.tms.common.exception.BussinessException;
@@ -28,6 +29,9 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
 
     @Autowired
     private HomePageModuleMapper homePageModuleMapper;
+
+    @Autowired
+    private TbLogService tbLogService;
 
     @Override
     public JSONObject getHomePageModule(String id) throws Exception {
@@ -70,7 +74,7 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
     }
 
     @Override
-    public JSONObject addHomePageModule(JSONObject param) throws Exception {
+    public JSONObject addHomePageModule(JSONObject param, String token) throws Exception {
 
         HomePageModule homePageModule = JOHelper.jo2class(param, HomePageModule.class);
         homePageModule.setId(UUIDHelper.getUUID());
@@ -81,6 +85,8 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
 
         homePageModuleMapper.insert(homePageModule);
 
+        tbLogService.addTbLog(token, "home_page_module", homePageModule.getId(), 1);
+
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
         result.put("status", 1);
@@ -88,7 +94,7 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
     }
 
     @Override
-    public JSONObject updateHomePageModule(JSONObject param) throws Exception {
+    public JSONObject updateHomePageModule(JSONObject param, String token) throws Exception {
 
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
@@ -98,6 +104,8 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
 
         homePageModuleMapper.updateByPrimaryKey(homePageModule);
 
+        tbLogService.addTbLog(token, "home_page_module", homePageModule.getId(), 2);
+
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");
         result.put("status", 1);
@@ -105,7 +113,7 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
     }
 
     @Override
-    public JSONObject deleteHomePageModule(JSONObject param) throws Exception {
+    public JSONObject deleteHomePageModule(JSONObject param, String token) throws Exception {
         String id = param.getString("id");
         Integer flagDelete = param.getInteger("flagDelete");
         if (StringUtils.isBlank(id) || ObjectUtils.isEmpty(flagDelete)) {
@@ -118,6 +126,8 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
 
         homePageModuleMapper.updateByPrimaryKeySelective(homePageModule);
 
+        tbLogService.addTbLog(token, "home_page_module", homePageModule.getId(), 3);
+
         JSONObject result = new JSONObject();
         result.put("data", "删除成功");
         result.put("status", 1);
@@ -125,7 +135,7 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
     }
 
     @Override
-    public JSONObject multiDownHome(JSONObject param) throws Exception {
+    public JSONObject multiDownHome(JSONObject param, String token) throws Exception {
 
         if (ObjectUtils.isEmpty(param.getJSONArray("list"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSINGByMultiDown);
@@ -145,7 +155,14 @@ public class HomePageModuleServiceImpl implements HomePageModuleService {
 
             homePageModuleMapper.updateByPrimaryKeySelective(homePageModule);
 
+            try {
+                tbLogService.addTbLog(token, "home_page_module", homePageModule.getId(), 3);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         });
+
 
         JSONObject result = new JSONObject();
         result.put("data", "批量下线成功");

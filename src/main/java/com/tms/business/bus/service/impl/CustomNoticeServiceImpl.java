@@ -2,6 +2,7 @@ package com.tms.business.bus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.tms.business.bus.service.CustomNoticeService;
+import com.tms.business.bus.service.TbLogService;
 import com.tms.business.domain.CustomNotice;
 import com.tms.business.mapper.CustomNoticeMapper;
 import com.tms.common.exception.BussinessException;
@@ -23,6 +24,9 @@ public class CustomNoticeServiceImpl implements CustomNoticeService {
     @Autowired
     private CustomNoticeMapper customNoticeMapper;
 
+    @Autowired
+    private TbLogService tbLogService;
+
     @Override
     public JSONObject getNoticeInfo() throws Exception {
 
@@ -34,7 +38,7 @@ public class CustomNoticeServiceImpl implements CustomNoticeService {
     }
 
     @Override
-    public JSONObject addNoticeInfo(JSONObject param) throws Exception {
+    public JSONObject addNoticeInfo(JSONObject param, String token) throws Exception {
 
         CustomNotice customNotice = JOHelper.jo2class(param, CustomNotice.class);
         customNotice.setId(UUIDHelper.getUUID());
@@ -44,6 +48,8 @@ public class CustomNoticeServiceImpl implements CustomNoticeService {
 
         customNoticeMapper.insert(customNotice);
 
+        tbLogService.addTbLog(token, "custom_notice", customNotice.getId(), 1);
+
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
         result.put("status", 1);
@@ -51,7 +57,7 @@ public class CustomNoticeServiceImpl implements CustomNoticeService {
     }
 
     @Override
-    public JSONObject updateNoticeInfo(JSONObject param) throws Exception {
+    public JSONObject updateNoticeInfo(JSONObject param, String token) throws Exception {
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
         }
@@ -59,6 +65,8 @@ public class CustomNoticeServiceImpl implements CustomNoticeService {
         customNotice.setModifyTime(new Date());
 
         customNoticeMapper.updateByPrimaryKey(customNotice);
+
+        tbLogService.addTbLog(token, "custom_notice", customNotice.getId(), 2);
 
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.tms.business.bus.service.LiveShowService;
+import com.tms.business.bus.service.TbLogService;
 import com.tms.business.domain.LiveShow;
 import com.tms.business.mapper.LiveShowMapper;
 import com.tms.common.exception.BussinessException;
@@ -25,6 +26,9 @@ public class LiveShowServiceImpl implements LiveShowService {
 
     @Autowired
     private LiveShowMapper liveShowMapper;
+
+    @Autowired
+    private TbLogService tbLogService;
 
     @Override
     public JSONObject fetchLiveShowList(JSONObject param) throws Exception {
@@ -67,7 +71,7 @@ public class LiveShowServiceImpl implements LiveShowService {
     }
 
     @Override
-    public JSONObject addLiveShowInfo(JSONObject param) throws Exception {
+    public JSONObject addLiveShowInfo(JSONObject param, String token) throws Exception {
         LiveShow liveShow = JOHelper.jo2class(param, LiveShow.class);
         liveShow.setId(UUIDHelper.getUUID());
         liveShow.setFlagDelete(0);
@@ -80,6 +84,8 @@ public class LiveShowServiceImpl implements LiveShowService {
 
         liveShowMapper.insert(liveShow);
 
+        tbLogService.addTbLog(token, "live_show", liveShow.getId(), 1);
+
         JSONObject result = new JSONObject();
         result.put("data", "添加成功");
         result.put("status", 1);
@@ -87,7 +93,7 @@ public class LiveShowServiceImpl implements LiveShowService {
     }
 
     @Override
-    public JSONObject updateLiveShowInfo(JSONObject param) throws Exception {
+    public JSONObject updateLiveShowInfo(JSONObject param, String token) throws Exception {
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
         }
@@ -99,6 +105,8 @@ public class LiveShowServiceImpl implements LiveShowService {
 
         liveShowMapper.updateByPrimaryKeyWithBLOBs(liveShow);
 
+        tbLogService.addTbLog(token, "live_show", liveShow.getId(), 2);
+
         JSONObject result = new JSONObject();
         result.put("data", "修改成功");
         result.put("status", 1);
@@ -106,7 +114,7 @@ public class LiveShowServiceImpl implements LiveShowService {
     }
 
     @Override
-    public JSONObject deleteLiveShowInfo(JSONObject param) throws Exception {
+    public JSONObject deleteLiveShowInfo(JSONObject param, String token) throws Exception {
         if (StringUtils.isBlank(param.getString("id"))) {
             throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
         }
@@ -115,6 +123,8 @@ public class LiveShowServiceImpl implements LiveShowService {
         liveShow.setFlagDelete(1);
 
         liveShowMapper.updateByPrimaryKeySelective(liveShow);
+
+        tbLogService.addTbLog(token, "live_show", liveShow.getId(), 3);
 
         JSONObject result = new JSONObject();
         result.put("data", "删除成功");

@@ -28,19 +28,19 @@ public class ScenicController extends BaseController{
 
     @RequestMapping(value = "/scenic/add_scenic")
     @ResponseBody
-    public JSONObject addScenicInfo(@RequestBody JSONObject param) throws Exception{
-        return scenicService.addScenicInfo(param);
+    public JSONObject addScenicInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return scenicService.addScenicInfo(param, token);
     }
 
     @RequestMapping(value = "/scenic/update_scenic")
     @ResponseBody
-    public JSONObject updateScenicInfo(@RequestBody JSONObject param) throws Exception{
-        return scenicService.updateScenicInfo(param);
+    public JSONObject updateScenicInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return scenicService.updateScenicInfo(param, token);
     }
 
     @RequestMapping(value = "/scenic/delete_scenic")
     @ResponseBody
-    public JSONObject deleteScenicInfo(@RequestBody JSONObject param) throws Exception{
-        return scenicService.deleteScenicInfo(param);
+    public JSONObject deleteScenicInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return scenicService.deleteScenicInfo(param, token);
     }
 }

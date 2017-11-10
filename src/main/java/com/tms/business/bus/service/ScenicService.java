@@ -11,10 +11,10 @@ public interface ScenicService {
 
     JSONObject selectList(JSONObject param) throws Exception;
 
-    JSONObject addScenicInfo(JSONObject param) throws Exception;
+    JSONObject addScenicInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject updateScenicInfo(JSONObject param) throws Exception;
+    JSONObject updateScenicInfo(JSONObject param, String token) throws Exception;
 
-    JSONObject deleteScenicInfo(JSONObject param) throws Exception;
+    JSONObject deleteScenicInfo(JSONObject param, String token) throws Exception;
 
 }

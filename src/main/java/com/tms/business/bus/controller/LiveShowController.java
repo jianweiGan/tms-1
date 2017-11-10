@@ -6,10 +6,7 @@ import com.tms.mvc.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class LiveShowController extends BaseController{
@@ -31,19 +28,19 @@ public class LiveShowController extends BaseController{
 
     @RequestMapping(value = "/live/add_live_show_info")
     @ResponseBody
-    public JSONObject addLiveShowInfo(@RequestBody JSONObject param) throws Exception{
-        return liveShowService.addLiveShowInfo(param);
+    public JSONObject addLiveShowInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return liveShowService.addLiveShowInfo(param, token);
     }
 
     @RequestMapping(value = "/live/update_live_show_info")
     @ResponseBody
-    public JSONObject updateLiveShowInfo(@RequestBody JSONObject param) throws Exception{
-        return liveShowService.updateLiveShowInfo(param);
+    public JSONObject updateLiveShowInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return liveShowService.updateLiveShowInfo(param, token);
     }
 
     @RequestMapping(value = "/live/delete_live_show_info")
     @ResponseBody
-    public JSONObject deleteLiveShowInfo(@RequestBody JSONObject param) throws Exception{
-        return liveShowService.deleteLiveShowInfo(param);
+    public JSONObject deleteLiveShowInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return liveShowService.deleteLiveShowInfo(param, token);
     }
 }

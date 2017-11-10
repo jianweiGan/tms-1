@@ -7,10 +7,7 @@ import com.tms.mvc.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TmsLegendController extends BaseController{
@@ -27,14 +24,14 @@ public class TmsLegendController extends BaseController{
 
     @RequestMapping(value = "/legend/add_legend")
     @ResponseBody
-    public JSONObject addLegendInfo(@RequestBody JSONObject param) throws Exception{
-        return tmsLegendService.addLegendInfo(param);
+    public JSONObject addLegendInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return tmsLegendService.addLegendInfo(param, token);
     }
 
     @RequestMapping(value = "/legend/update_legend")
     @ResponseBody
-    public JSONObject updateLegendInfo(@RequestBody JSONObject param) throws Exception{
-        return tmsLegendService.updateLegendInfo(param);
+    public JSONObject updateLegendInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return tmsLegendService.updateLegendInfo(param, token);
     }
 
     @RequestMapping(value = "/legend/fetch_legend_activity_list")
@@ -51,19 +48,19 @@ public class TmsLegendController extends BaseController{
 
     @RequestMapping(value = "/legend/add_legend_activity_info")
     @ResponseBody
-    public JSONObject addLegendActivityInfo(@RequestBody JSONObject param) throws Exception{
-        return tmsLegendService.addLegendActivityInfo(param);
+    public JSONObject addLegendActivityInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return tmsLegendService.addLegendActivityInfo(param, token);
     }
 
     @RequestMapping(value = "/legend/update_legend_activity_info")
     @ResponseBody
-    public JSONObject updateLegendActivityInfo(@RequestBody JSONObject param) throws Exception{
-        return tmsLegendService.updateLegendActivityInfo(param);
+    public JSONObject updateLegendActivityInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return tmsLegendService.updateLegendActivityInfo(param, token);
     }
 
     @RequestMapping(value = "/legend/delete_legend_activity_info")
     @ResponseBody
-    public JSONObject deleteLegendActivityInfo(@RequestBody JSONObject param) throws Exception{
-        return tmsLegendService.deleteLegendActivityInfo(param);
+    public JSONObject deleteLegendActivityInfo(@RequestBody JSONObject param, @RequestHeader(value="X-Token") String token) throws Exception{
+        return tmsLegendService.deleteLegendActivityInfo(param, token);
     }
 }
