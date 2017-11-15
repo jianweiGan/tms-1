@@ -47,19 +47,7 @@ public class WonderfulPhotoServiceImpl implements WonderfulPhotoService {
 
     @Override
     public JSONObject getWonderfulPhotoInfo(String id) throws Exception {
-        if (StringUtils.isBlank(id)) {
-            throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
-        }
-
-        WonderfulPhoto wonderfulPhoto = wonderfulPhotoMapper.selectByPrimaryKey(id);
-
-        if (ObjectUtils.isEmpty(wonderfulPhoto)) {
-            throw new BussinessException(ErrorCodeEnum.PARAMETERMISSING);
-        }
-
-        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(wonderfulPhoto);
-
-        return jsonObject;
+        return null;
     }
 
     @Override

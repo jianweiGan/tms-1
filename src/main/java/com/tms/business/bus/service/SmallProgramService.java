@@ -27,5 +27,12 @@ public interface SmallProgramService {
 
     JSONObject getScenisInfo(JSONObject param) throws Exception;
 
+    JSONObject selectWonderfulPhotoList(JSONObject param) throws Exception;
+
+    JSONObject getWonderfulPhotoInfo(JSONObject param) throws Exception;
+
+    JSONObject addWonderfulPhotoInfo(JSONObject param) throws Exception;
+
+    JSONObject selectMapList(JSONObject param) throws Exception;
 
 }

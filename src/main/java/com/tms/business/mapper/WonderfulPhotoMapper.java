@@ -59,4 +59,6 @@ public interface WonderfulPhotoMapper {
 
     Page<WonderfulPhoto> selectList(@Param("type") Integer type, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
+    Page<WonderfulPhoto> selectWonderfulPhotoList(@Param("type") Integer type);
+
 }

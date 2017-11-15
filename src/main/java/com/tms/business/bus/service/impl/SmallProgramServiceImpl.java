@@ -39,6 +39,10 @@ public class SmallProgramServiceImpl implements SmallProgramService {
     private CustomNoticeMapper customNoticeMapper;
     @Autowired
     private FeedBackMapper feedBackMapper;
+    @Autowired
+    private WonderfulPhotoMapper wonderfulPhotoMapper;
+    @Autowired
+    private MapManageMapper mapManageMapper;
 
     @Override
     public JSONObject selectHomePageList(JSONObject param) throws Exception {
@@ -252,5 +256,64 @@ public class SmallProgramServiceImpl implements SmallProgramService {
         jsonObject.put("audioUrls", audioUrls);
 
         return jsonObject;
+    }
+
+    @Override
+    public JSONObject selectWonderfulPhotoList(JSONObject param) throws Exception {
+        JSONObject pageJson = param.getJSONObject("page");
+
+        PageHelper.startPage(pageJson.getIntValue("pageNo"), pageJson.getIntValue("pageSize")); // 核心分页代码
+
+        Page<WonderfulPhoto> page = wonderfulPhotoMapper.selectWonderfulPhotoList(param.getInteger("type"));
+
+        JSONObject result = new JSONObject();
+        result.put("list", page.getResult());
+        result.put("totalCount", page.getTotal());
+        result.put("pageSize", page.getPageSize());
+        return result;
+    }
+
+    @Override
+    public JSONObject getWonderfulPhotoInfo(JSONObject param) throws Exception {
+        return null;
+    }
+
+    @Override
+    public JSONObject addWonderfulPhotoInfo(JSONObject param) throws Exception {
+        WonderfulPhoto wonderfulPhoto = JOHelper.jo2class(param, WonderfulPhoto.class);
+        wonderfulPhoto.setId(UUIDHelper.getUUID());
+        wonderfulPhoto.setFlagDelete(1);
+        wonderfulPhoto.setCreateTime(new Date());
+        wonderfulPhoto.setModifyTime(new Date());
+
+        wonderfulPhotoMapper.insert(wonderfulPhoto);
+
+        JSONObject result = new JSONObject();
+        result.put("data", "添加成功");
+        result.put("status", 1);
+        return result;
+    }
+
+    @Override
+    public JSONObject selectMapList(JSONObject param) throws Exception {
+
+        PageHelper.startPage(1, 100); // 核心分页代码
+
+        JSONObject result = new JSONObject();
+
+        MapManage mapManage = new MapManage();
+
+        Page<MapManage> page = mapManageMapper.selectList(mapManage);
+
+        result.put("mapList", page.getResult());
+
+        ScenicSpot scenicSpot = new ScenicSpot();
+
+        scenicSpot.setFlagDelete(0);
+        Page<ScenicSpot> scenicPage = scenicSpotMapper.selectList(scenicSpot);
+
+        result.put("scenicList", scenicPage.getResult());
+
+        return JOHelper.gen("data", result, "status", 1);
     }
 }

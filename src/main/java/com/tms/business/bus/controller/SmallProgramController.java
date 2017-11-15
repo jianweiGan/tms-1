@@ -66,4 +66,23 @@ public class SmallProgramController extends BaseController{
         return smallProgramService.aboutTms(param);
     }
 
+    @RequestMapping(value = "/program/select_wonderful_photo_list")
+    @ResponseBody
+    public JSONObject selectWonderfulPhotoList(@RequestBody JSONObject param) throws Exception{
+        return smallProgramService.selectWonderfulPhotoList(param);
+    }
+
+    @RequestMapping(value = "/program/add_wonderful_photo_info")
+    @ResponseBody
+    public JSONObject addWonderfulPhotoInfo(@RequestBody JSONObject param) throws Exception{
+        return smallProgramService.addWonderfulPhotoInfo(param);
+    }
+
+    @RequestMapping(value = "/program/select_map_list")
+    @ResponseBody
+    public JSONObject selectMapList(@RequestBody JSONObject param) throws Exception{
+        return smallProgramService.selectMapList(param);
+    }
+
+
 }

@@ -185,4 +185,13 @@
     </where>
     order by create_time desc
   </select>
+
+  <select id="selectWonderfulPhotoList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wonderful_photo
+    where type = #{type,jdbcType=INTEGER}
+    and flag_delete = 0
+    order by create_time desc
+  </select>
 </mapper>
